@@ -75,11 +75,11 @@ L_y = max_y - min_y
 
 # Image size
 rgb_img = np.zeros((1000,1000,3), dtype='uint8')
-dep_img = np.zeros((1000,1000), dtype='uint16')
+dep_img = np.zeros((1000,1000), dtype='uint8')
 
 # Resolution for rgb image and depth image
 ImgRes = max(L_x , L_y)/1000
-Depth_z = (max_z - min_z)/(2**16)
+Depth_z = (max_z - min_z)/(2**8)
 
 print ("Resolution got")
 
@@ -91,15 +91,15 @@ for img_i in range(0,datas_len):
     if (y_pos >= 1000):
         y_pos = 999
 
-    rgb_img[x_pos][y_pos][0] = rgb_datas[img_i][0]
+    rgb_img[x_pos][y_pos][2] = rgb_datas[img_i][0]
     rgb_img[x_pos][y_pos][1] = rgb_datas[img_i][1]
-    rgb_img[x_pos][y_pos][2] = rgb_datas[img_i][2]
+    rgb_img[x_pos][y_pos][0] = rgb_datas[img_i][2]
 
     dep_img[x_pos][y_pos] = (xyz_datas[img_i][2] - min_z)//Depth_z
 
 # save images
-cv2.imwrite("images/test_dep_2.png", dep_img)
-cv2.imwrite("images/test_rgb_2.png", rgb_img)
+cv2.imwrite("images/test_dep_4.png", dep_img)
+cv2.imwrite("images/test_rgb_4.png", rgb_img)
 
 print("finished!")
 
