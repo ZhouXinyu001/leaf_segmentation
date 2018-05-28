@@ -15,16 +15,18 @@ import cv2
 import sys
 
 # Load .xyz file
-xyz_file = "pointcloud/leaf_test_fixed.xyz"
+xyz_file = "pointcloud/tree_test_orth_test_2.xyz"
 
 orin_datas = np.loadtxt(xyz_file)
 orin_len = len(orin_datas)
 
 # Get the filtered point cloud
-datas = []
-for orin_i in range(0, orin_len):
-    if orin_datas[orin_i][2] <= 0.2 and orin_datas[orin_i][2] >= -0.5:
-        datas.append(orin_datas[orin_i])
+# datas = []
+# for orin_i in range(0, orin_len):
+#     if orin_datas[orin_i][2] <= 0.2 and orin_datas[orin_i][2] >= -0.5:
+#         datas.append(orin_datas[orin_i])
+
+datas = orin_datas
 
 print ("Load finished")
 
@@ -98,8 +100,7 @@ for img_i in range(0,datas_len):
     dep_img[x_pos][y_pos] = (xyz_datas[img_i][2] - min_z)//Depth_z
 
 # save images
-cv2.imwrite("images/test_dep_4.png", dep_img)
-cv2.imwrite("images/test_rgb_4.png", rgb_img)
+cv2.imwrite("images/tree_dep_4.png", dep_img)
+cv2.imwrite("images/tree_rgb_4.png", rgb_img)
 
 print("finished!")
-
