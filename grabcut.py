@@ -61,7 +61,7 @@ def onmouse(event,x,y,flags,param):
     global img,img2,drawing,value,mask,rectangle,rect,rect_or_mask,ix,iy,rect_over
 
     # Draw Rectangle
-    if event == cv.EVENT_MBUTTONDOWN:
+    if event == cv.EVENT_RBUTTONDOWN:
         rectangle = True
         ix,iy = x,y
 
@@ -72,7 +72,7 @@ def onmouse(event,x,y,flags,param):
             rect = (min(ix,x),min(iy,y),abs(ix-x),abs(iy-y))
             rect_or_mask = 0
 
-    elif event == cv.EVENT_MBUTTONUP:
+    elif event == cv.EVENT_RBUTTONUP:
         rectangle = False
         rect_over = True
         cv.rectangle(img,(ix,iy),(x,y),BLUE,2)
@@ -120,8 +120,8 @@ if __name__ == '__main__':
     output = np.zeros(img.shape,np.uint8)           # output image to be shown
 
     # input and output windows
-    cv.namedWindow('output')
-    cv.namedWindow('input')
+    cv.namedWindow('output',cv.WINDOW_GUI_NORMAL)
+    cv.namedWindow('input', cv.WINDOW_GUI_NORMAL)
     cv.setMouseCallback('input',onmouse)
     cv.moveWindow('input',img.shape[1]+10,90)
 

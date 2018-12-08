@@ -15,7 +15,7 @@ import cv2
 import sys
 
 # Load .xyz file
-xyz_file = "pointcloud/tree_test_orth_test_2.xyz"
+xyz_file = "pointcloud/1103_segment_4.xyz"
 
 orin_datas = np.loadtxt(xyz_file)
 orin_len = len(orin_datas)
@@ -23,7 +23,7 @@ orin_len = len(orin_datas)
 # Get the filtered point cloud
 datas = []
 for orin_i in range(0, orin_len):
-    if orin_datas[orin_i][2] <= 99 and orin_datas[orin_i][2] >= 97.5:
+    if orin_datas[orin_i][2] <= 99 and orin_datas[orin_i][2] >= 97:
         datas.append(orin_datas[orin_i])
 
 # datas = orin_datas
@@ -76,11 +76,11 @@ L_x = max_x - min_x
 L_y = max_y - min_y
 
 # Image size
-rgb_img = np.zeros((1000,1000,3), dtype='uint8')
-dep_img = np.zeros((1000,1000), dtype='uint8')
+rgb_img = np.zeros((3000,3000,3), dtype='uint8')
+dep_img = np.zeros((3000,3000), dtype='uint8')
 
 # Resolution for rgb image and depth image
-ImgRes = max(L_x , L_y)/1000
+ImgRes = max(L_x , L_y)/3000
 Depth_z = (max_z - min_z)/(2**8)
 
 print ("Resolution got")
@@ -88,10 +88,10 @@ print ("Resolution got")
 for img_i in range(0,datas_len):
     x_pos = int((xyz_datas[img_i][0] - min_x)//ImgRes)
     y_pos = int((xyz_datas[img_i][1] - min_y)//ImgRes)
-    if (x_pos >= 1000):
-        x_pos = 999
-    if (y_pos >= 1000):
-        y_pos = 999
+    if (x_pos >= 3000):
+        x_pos = 2999
+    if (y_pos >= 3000):
+        y_pos = 2999
 
     rgb_img[x_pos][y_pos][2] = rgb_datas[img_i][0]
     rgb_img[x_pos][y_pos][1] = rgb_datas[img_i][1]
@@ -100,7 +100,7 @@ for img_i in range(0,datas_len):
     dep_img[x_pos][y_pos] = (xyz_datas[img_i][2] - min_z)//Depth_z
 
 # save images
-cv2.imwrite("images/tree_dep_6.png", dep_img)
-cv2.imwrite("images/tree_rgb_6.png", rgb_img)
+cv2.imwrite("images/large_dep_2.png", dep_img)
+cv2.imwrite("images/large_rgb_2.png", rgb_img)
 
 print("finished!")
